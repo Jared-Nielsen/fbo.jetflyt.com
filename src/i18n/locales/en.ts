@@ -9,8 +9,8 @@ export const en = {
     'nav.signOut': 'Sign Out',
 
     // Landing Page
-    'landing.title': 'Aviation Fuel Tender Management',
-    'landing.subtitle': 'Optimize your aviation fuel procurement process',
+    'landing.title': 'FBO Tender Bid Portal',
+    'landing.subtitle': 'Add New Operators.  Retain Great Customers',
     'landing.auth.signInCta': 'Sign in to access →',
     
     'landing.features.tenders.title': 'Submit Tender',
