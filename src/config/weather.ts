@@ -1,17 +1,15 @@
-// OpenWeatherMap configuration
 export const WEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY || '';
 
-export const WEATHER_LAYERS = {
-  clouds: 'clouds_new',
+export type WeatherLayer = 'precipitation' | 'temp' | 'wind' | 'pressure' | 'clouds';
+
+export const WEATHER_LAYERS: Record<WeatherLayer, string> = {
   precipitation: 'precipitation_new',
-  pressure: 'pressure_new',
+  temp: 'temp_new',
   wind: 'wind_new',
-  temp: 'temp_new'
-} as const;
-
-export type WeatherLayer = keyof typeof WEATHER_LAYERS;
-
-// Helper to check if OpenWeather is properly configured
-export const isWeatherConfigured = () => {
-  return Boolean(WEATHER_API_KEY && WEATHER_API_KEY.length === 32);
+  pressure: 'pressure_new',
+  clouds: 'clouds_new'
 };
+
+export const WEATHER_TILE_URL = 'https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={apiKey}';
+
+export const isWeatherConfigured = () => Boolean(WEATHER_API_KEY);

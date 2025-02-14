@@ -1,37 +1,37 @@
-import React from 'react';
-import { isSupabaseConfigured } from '../lib/supabase';
-import NoSupabaseWarning from '../components/NoSupabaseWarning';
-import { MapError } from '../components/map/MapError';
-import { LeafletMap } from '../components/map/LeafletMap';
+import { useState, useEffect } from 'react';
 import { TripFooter } from '../components/map/TripFooter';
-import { useICAOData } from '../hooks/useICAOData';
 import { SEO } from '../components/SEO';
 import { LoadingScreen } from '../components/auth/LoadingScreen';
+import { useTranslation } from 'react-i18next';
+import type { Trip } from '../types/trip';
+import { useTrip } from '../hooks/useTrip';
 
 export default function FBOMapPage() {
-  const { data: airports, error: icaoError, loading: icaoLoading } = useICAOData();
+  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
+  const { t } = useTranslation();
+  const { trips } = useTrip();
 
-  if (!isSupabaseConfigured()) {
-    return <NoSupabaseWarning />;
-  }
+  // Set the first trip as selected when trips are loaded
+  useEffect(() => {
+    if (trips && trips.length > 0 && !selectedTrip) {
+      setSelectedTrip(trips[0]);
+    }
+  }, [trips, selectedTrip]);
 
-  if (icaoError) {
-    return <MapError message={icaoError} />;
-  }
-
-  if (icaoLoading) {
+  if (!selectedTrip) {
     return <LoadingScreen />;
   }
 
   return (
     <>
       <SEO 
-        title="Airport Map"
-        description="Interactive map showing airports across Texas with real-time weather data and FBO locations."
+        title={t('fboMap.title')}
+        description={t('fboMap.subtitle')}
       />
-      <div className="h-[calc(100vh-64px)]">
-        <LeafletMap airports={airports || []} />
-        <TripFooter />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-2xl font-semibold text-gray-900">{t('fboMap.title')}</h1>
+        <p className="mt-2 text-sm text-gray-700">{t('fboMap.subtitle')}</p>
+        <TripFooter trip={selectedTrip} />
       </div>
     </>
   );

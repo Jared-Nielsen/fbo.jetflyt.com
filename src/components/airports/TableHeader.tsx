@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpDown } from 'lucide-react';
 import type { ICAO } from '../../types/icao';
 
@@ -19,6 +18,13 @@ export function TableHeader({ sortConfig, onSort }: TableHeaderProps) {
     { key: 'longitude', label: 'Longitude' }
   ];
 
+  const getSortIndicator = (key: keyof ICAO) => {
+    if (sortConfig.key === key) {
+      return sortConfig.direction === 'asc' ? '↑' : '↓';
+    }
+    return null;
+  };
+
   return (
     <thead className="bg-gray-50">
       <tr>
@@ -32,6 +38,7 @@ export function TableHeader({ sortConfig, onSort }: TableHeaderProps) {
             <div className="flex items-center space-x-1">
               <span>{label}</span>
               <ArrowUpDown className="h-4 w-4" />
+              {getSortIndicator(key)}
             </div>
           </th>
         ))}

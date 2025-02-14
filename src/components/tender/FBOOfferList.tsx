@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { Modal } from '../shared/Modal';
 import { useTender } from '../../hooks/useTender';
@@ -69,11 +69,12 @@ export function FBOOfferList({ offers, tenderId, tenderStatus, onOfferAccepted }
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {offers.map((offer) => {
-              const finalCost = offer.total_cost + offer.taxes_and_fees;
-              const hasCounterOffer = offer.counter_price && offer.counter_total_cost;
-              const counterFinalCost = hasCounterOffer ? 
-                (offer.counter_total_cost + (offer.counter_taxes_and_fees || 0)) : 0;
-              
+
+const finalCost = offer.total_cost + offer.taxes_and_fees;
+const hasCounterOffer = offer.counter_price !== undefined && offer.counter_total_cost !== undefined;
+const counterFinalCost = hasCounterOffer && offer.counter_total_cost ? 
+  (offer.counter_total_cost + (offer.counter_taxes_and_fees || 0)) : 0;
+
               return (
                 <tr key={offer.id} className={`${offer.status === 'accepted' ? 'bg-gray-50' : 'bg-white'}`}>
                   <td className="px-4 py-3">
@@ -93,7 +94,7 @@ export function FBOOfferList({ offers, tenderId, tenderStatus, onOfferAccepted }
                     <div className="text-sm text-gray-900">
                       ${offer.offer_price.toFixed(2)}/gal
                     </div>
-                    {hasCounterOffer && (
+                    {hasCounterOffer && offer.counter_price !== undefined && (
                       <div className="text-sm text-blue-600 mt-1">
                         ${offer.counter_price.toFixed(2)}/gal
                       </div>
@@ -103,7 +104,7 @@ export function FBOOfferList({ offers, tenderId, tenderStatus, onOfferAccepted }
                     <div className="text-sm text-gray-900">
                       ${offer.total_cost.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </div>
-                    {hasCounterOffer && (
+                    {hasCounterOffer && offer.counter_total_cost !== undefined && (
                       <div className="text-sm text-blue-600 mt-1">
                         ${offer.counter_total_cost.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                       </div>

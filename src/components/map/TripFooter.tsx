@@ -1,58 +1,51 @@
 import { useState } from 'react';
-import { ChevronUp, ChevronDown, Plus } from 'lucide-react';
-import { useTrip } from '../../hooks/useTrip';
-import { useAuth } from '../../contexts/AuthContext';
-import { RouteList } from './RouteList';
 import { AddTripModal } from '../dispatch/AddTripModal';
+import type { Trip } from '../../types/trip';
 import { useTranslation } from 'react-i18next';
 
-export function TripFooter() {
-  const [isExpanded, setIsExpanded] = useState(false);
+interface TripFooterProps {
+  trip?: Trip;
+}
+
+export function TripFooter({ trip }: TripFooterProps) {
   const [showAddModal, setShowAddModal] = useState(false);
-  const { activeTrip } = useTrip();
-  const { user } = useAuth();
   const { t } = useTranslation();
 
+  const handleTripAdded = async () => {
+    setShowAddModal(false);
+    window.location.reload();
+  };
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-[1000]">
-      <div className="flex items-center justify-between px-4 py-2 border-b">
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center space-x-2 text-gray-700"
-        >
-          {isExpanded ? (
-            <ChevronDown className="h-5 w-5" />
-          ) : (
-            <ChevronUp className="h-5 w-5" />
+    <div className="bg-white border-t border-gray-200 px-4 py-3">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-4">
+          {trip && (
+            <div>
+              <h3 className="text-sm font-medium text-gray-900">
+                {trip.name}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {new Date(trip.start_date).toLocaleDateString()}
+                {trip.end_date && (
+                  <> → {new Date(trip.end_date).toLocaleDateString()}</>
+                )}
+              </p>
+            </div>
           )}
-          <span className="font-medium">
-            {activeTrip ? activeTrip.name : t('trip.noActiveTrip')}
-          </span>
-        </button>
+        </div>
         <button
-          onClick={() => user && setShowAddModal(true)}
-          disabled={!user}
-          className={`flex items-center space-x-1 px-3 py-1 rounded ${
-            user 
-              ? 'bg-blue-600 text-white hover:bg-blue-700' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-          title={user ? t('trip.newTrip') : t('trip.signInRequired')}
+          onClick={() => setShowAddModal(true)}
+          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
         >
-          <Plus className="h-4 w-4" />
-          <span>{t('trip.newTrip')}</span>
+          {t('trip.management.newTrip')}
         </button>
       </div>
-
-      {isExpanded && activeTrip && (
-        <div className="p-4 max-h-64 overflow-y-auto">
-          <RouteList trip={activeTrip} />
-        </div>
-      )}
 
       <AddTripModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
+        onTripAdded={handleTripAdded}
       />
     </div>
   );

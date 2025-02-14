@@ -37,7 +37,7 @@ export function AddRouteModal({ isOpen, onClose, tripId, onRouteAdded }: AddRout
           {error}
         </div>
       )}
-      <RouteForm onSubmit={handleSubmit} onCancel={onClose} />
+      <RouteForm onSubmit={handleSubmit} onCancel={onClose} tripId={tripId} />
     </Modal>
   );
 }

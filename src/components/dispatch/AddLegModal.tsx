@@ -43,7 +43,7 @@ export function AddLegModal({ isOpen, onClose, routeId, onLegAdded }: AddLegModa
           {error}
         </div>
       )}
-      <LegForm onSubmit={handleSubmit} onCancel={onClose} />
+      <LegForm onSubmit={handleSubmit} onCancel={onClose} routeId={routeId} />
     </Modal>
   );
 }

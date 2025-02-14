@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { WEATHER_TILE_URL, WEATHER_LAYERS, type WeatherLayer } from '../../config/weather';
+import { WEATHER_LAYERS, type WeatherLayer } from '../../config/weather';
 
 interface WeatherLayerProps {
   layer: WeatherLayer;

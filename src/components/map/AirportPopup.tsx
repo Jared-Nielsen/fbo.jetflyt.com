@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ICAO } from '../../types/icao';
 import { useAirportFBOs } from '../../hooks/useAirportFBOs';
 import { Building2 } from 'lucide-react';

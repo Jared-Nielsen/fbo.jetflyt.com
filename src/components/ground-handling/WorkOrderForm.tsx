@@ -7,7 +7,6 @@ import { useServices } from '../../hooks/useServices';
 import { useAircraft } from '../../hooks/useAircraft';
 import { useICAOData } from '../../hooks/useICAOData';
 import { supabase } from '../../lib/supabase';
-import type { Service } from '../../types/workOrder';
 import type { FBO } from '../../types/fbo';
 import type { ICAO } from '../../types/icao';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +49,6 @@ export function WorkOrderForm({ initialData, onSubmit, onCancel }: WorkOrderForm
   
   const [fbos, setFbos] = useState<FBO[]>([]);
   const [selectedAirport, setSelectedAirport] = useState<ICAO | null>(null);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(false);
   const [dateError, setDateError] = useState<string | null>(null);
 
@@ -222,8 +220,6 @@ export function WorkOrderForm({ initialData, onSubmit, onCancel }: WorkOrderForm
         label={t('handling.form.fields.service')}
         value={formData.service_id}
         onChange={e => {
-          const service = services.find(s => s.id === e.target.value);
-          setSelectedService(service || null);
           setFormData(prev => ({ ...prev, service_id: e.target.value }));
         }}
         required
@@ -356,3 +352,4 @@ export function WorkOrderForm({ initialData, onSubmit, onCancel }: WorkOrderForm
     </form>
   );
 }
+

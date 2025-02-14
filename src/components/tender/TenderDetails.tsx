@@ -37,15 +37,9 @@ export function TenderDetails({ tender, onClose, onTenderUpdated }: TenderDetail
     }
   };
 
-  const handleEdit = async (data: any) => {
+  const handleEdit = async (data: Partial<Tender>) => {
     try {
-      await updateTender(tender.id, {
-        gallons: data.gallons,
-        target_price: data.target_price,
-        description: data.description,
-        start_date: data.start_date,
-        end_date: data.end_date
-      });
+      await updateTender(tender.id, data);
       await onTenderUpdated();
       setShowEditModal(false);
       onClose();
@@ -109,18 +103,26 @@ export function TenderDetails({ tender, onClose, onTenderUpdated }: TenderDetail
             <div>
               <dt className="text-sm font-medium text-gray-500">{t('tenders.details.aircraft')}</dt>
               <dd className="mt-1">
-                <div className="text-sm text-gray-900">{tender.aircraft.tail_number}</div>
-                <div className="text-sm text-gray-500">
-                  {tender.aircraft.manufacturer} {tender.aircraft.model}
-                </div>
+                {tender.aircraft && (
+                  <>
+                    <div className="text-sm text-gray-900">{tender.aircraft.tail_number}</div>
+                    <div className="text-sm text-gray-500">
+                      {tender.aircraft.manufacturer} {tender.aircraft.model}
+                    </div>
+                  </>
+                )}
               </dd>
             </div>
 
             <div>
               <dt className="text-sm font-medium text-gray-500">{t('tenders.details.location')}</dt>
               <dd className="mt-1">
-                <div className="text-sm text-gray-900">{tender.icao.code}</div>
-                <div className="text-sm text-gray-500">{tender.icao.name}</div>
+                {tender.icao && (
+                  <>
+                    <div className="text-sm text-gray-900">{tender.icao.code}</div>
+                    <div className="text-sm text-gray-500">{tender.icao.name}</div>
+                  </>
+                )}
               </dd>
             </div>
 
@@ -154,10 +156,12 @@ export function TenderDetails({ tender, onClose, onTenderUpdated }: TenderDetail
           <h4 className="text-lg font-medium text-gray-900">{t('tenders.details.fboResponses')}</h4>
           <div className="mt-4">
             <FBOOfferList 
-              offers={tender.fbo_tenders}
+              offers={tender.fbo_tenders || []}
               tenderId={tender.id}
               tenderStatus={tender.status}
-              onOfferAccepted={onTenderUpdated}
+              onOfferAccepted={async () => {
+                await onTenderUpdated();
+              }}
             />
           </div>
         </div>

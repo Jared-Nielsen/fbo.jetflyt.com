@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 
 // Default to empty strings to prevent initialization errors
@@ -20,7 +21,8 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: true
+    detectSessionInUrl: true,
+    storage: localStorage // Explicitly set localStorage as the storage mechanism
   },
   global: {
     fetch: fetchWithRetry as typeof fetch

@@ -1,0 +1,76 @@
+export const tenders = {
+  'tenders.title': 'Appels d\'offres',
+  'tenders.subtitle': 'Créez et gérez vos appels d\'offres de carburant auprès de plusieurs FBOs.',
+  'tenders.newTender': 'Nouvel Appel d\'offres',
+  
+  'tenders.status.title': 'Statut',
+  'tenders.status.pending': 'En attente',
+  'tenders.status.active': 'Actif',
+  'tenders.status.accepted': 'Accepté',
+  'tenders.status.rejected': 'Rejeté',
+  'tenders.status.cancelled': 'Annulé',
+
+  'tenders.details.title': 'Détails de l\'Appel d\'offres',
+  'tenders.details.created': 'Créé le',
+  'tenders.details.aircraft': 'Aéronef',
+  'tenders.details.location': 'Emplacement',
+  'tenders.details.fuelRequest': 'Demande de Carburant',
+  'tenders.details.bestPrice': 'Meilleur Prix Actuel',
+  'tenders.details.fboResponses': 'Réponses des FBOs',
+  'tenders.details.description': 'Description',
+  'tenders.details.totalValue': 'Valeur Totale',
+  'tenders.details.tenderId': 'ID de l\'Appel d\'offres',
+
+  'tenders.offers.columns.fbo': 'FBO',
+  'tenders.offers.columns.location': 'Emplacement',
+  'tenders.offers.columns.offerPrice': 'Prix Proposé',
+  'tenders.offers.columns.totalCost': 'Coût Total',
+  'tenders.offers.columns.taxesAndFees': 'Taxes et Frais',
+  'tenders.offers.columns.finalCost': 'Coût Final',
+  'tenders.offers.columns.actions': 'Actions',
+
+  'tenders.offers.buttons.accept': 'Accepter',
+  'tenders.offers.buttons.sendContract': 'Envoyer le Contrat',
+  'tenders.offers.buttons.close': 'Fermer',
+
+  'tenders.offers.modal.contractTitle': 'Confirmation du Contrat',
+  'tenders.offers.modal.contractSent': 'Le contrat a été envoyé à {{fbo}}',
+
+  'tenders.offers.errors.acceptFailed': 'Échec de l\'acceptation de l\'offre. Veuillez réessayer.',
+
+  'tenders.offers.noResponses': 'Aucune offre trouvée.',
+  'tenders.offers.response': 'réponse',
+  'tenders.offers.responses': 'réponses',
+
+  'tenders.form.title.new': 'Créer un Nouvel Appel d\'offres',
+  'tenders.form.title.edit': 'Modifier l\'Appel d\'offres',
+  'tenders.form.title.cancel': 'Annuler l\'Appel d\'offres',
+
+  'tenders.form.fields.aircraft': 'Aéronef',
+  'tenders.form.fields.selectAircraft': 'Sélectionner un aéronef',
+  'tenders.form.fields.airport': 'Aéroport',
+  'tenders.form.fields.selectAirport': 'Sélectionner un aéroport',
+  'tenders.form.fields.gallons': 'Gallons Requis',
+  'tenders.form.fields.targetPrice': 'Prix Cible',
+  'tenders.form.fields.annual': 'Annuel',
+  'tenders.form.fields.startDate': 'Date de Début',
+  'tenders.form.fields.endDate': 'Date de Fin (Optionnel)',
+  'tenders.form.fields.description': 'Description',
+  'tenders.form.fields.selectFbos': 'Sélectionner les FBOs pour l\'Appel d\'offres',
+
+  'tenders.form.buttons.cancel': 'Annuler',
+  'tenders.form.buttons.create': 'Créer l\'Appel d\'offres',
+  'tenders.form.buttons.update': 'Mettre à jour l\'Appel d\'offres',
+  'tenders.form.buttons.creating': 'Création en cours...',
+  'tenders.form.buttons.edit': 'Modifier',
+  'tenders.form.buttons.cancelTender': 'Annuler l\'Appel d\'offres',
+  'tenders.form.buttons.close': 'Fermer',
+  'tenders.form.buttons.keepIt': 'Non, Conserver',
+  'tenders.form.buttons.cancelling': 'Annulation en cours...',
+  'tenders.form.buttons.confirmCancel': 'Oui, Annuler l\'Appel d\'offres',
+
+  'tenders.form.confirmCancel': 'Êtes-vous sûr de vouloir annuler cet appel d\'offres ? Cette action ne peut pas être annulée.',
+
+  'tenders.form.errors.invalidDates': 'La date de fin doit être postérieure à la date de début',
+  'tenders.form.errors.noFboSelected': 'Veuillez sélectionner au moins un FBO',
+};

@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
-import type { WorkOrder } from '../types/workOrder';
 
 export function useWorkOrders() {
   const [loading, setLoading] = useState(false);

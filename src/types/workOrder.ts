@@ -1,3 +1,4 @@
+import type { Aircraft } from './aircraft';
 import type { FBO } from './fbo';
 
 export interface ServiceType {

@@ -4,8 +4,8 @@
   
 [build.environment]
   NODE_VERSION = "20"
-  SITE_NAME = "fbojetflyt"
-  SITE_ID = "fbojetflyt"
+  SITE_NAME = "jetflyt"
+  SITE_ID = "jetflyt"
 
 [[redirects]]
   from = "/*"

@@ -1,0 +1,76 @@
+export const tenders = {
+  'tenders.title': 'निविदाएं',
+  'tenders.subtitle': 'कई FBO में अपनी ईंधन निविदाएं बनाएं और प्रबंधित करें।',
+  'tenders.newTender': 'नई निविदा',
+  
+  'tenders.status.title': 'स्थिति',
+  'tenders.status.pending': 'लंबित',
+  'tenders.status.active': 'सक्रिय',
+  'tenders.status.accepted': 'स्वीकृत',
+  'tenders.status.rejected': 'अस्वीकृत',
+  'tenders.status.cancelled': 'रद्द',
+
+  'tenders.details.title': 'निविदा विवरण',
+  'tenders.details.created': 'बनाया गया',
+  'tenders.details.aircraft': 'विमान',
+  'tenders.details.location': 'स्थान',
+  'tenders.details.fuelRequest': 'ईंधन अनुरोध',
+  'tenders.details.bestPrice': 'वर्तमान सर्वोत्तम मूल्य',
+  'tenders.details.fboResponses': 'FBO प्रतिक्रियाएं',
+  'tenders.details.description': 'विवरण',
+  'tenders.details.totalValue': 'कुल मूल्य',
+  'tenders.details.tenderId': 'निविदा आईडी',
+
+  'tenders.offers.columns.fbo': 'FBO',
+  'tenders.offers.columns.location': 'स्थान',
+  'tenders.offers.columns.offerPrice': 'प्रस्तावित मूल्य',
+  'tenders.offers.columns.totalCost': 'कुल लागत',
+  'tenders.offers.columns.taxesAndFees': 'कर और शुल्क',
+  'tenders.offers.columns.finalCost': 'अंतिम लागत',
+  'tenders.offers.columns.actions': 'कार्रवाई',
+
+  'tenders.offers.buttons.accept': 'स्वीकार करें',
+  'tenders.offers.buttons.sendContract': 'अनुबंध भेजें',
+  'tenders.offers.buttons.close': 'बंद करें',
+
+  'tenders.offers.modal.contractTitle': 'अनुबंध पुष्टि',
+  'tenders.offers.modal.contractSent': 'अनुबंध {{fbo}} को भेज दिया गया है',
+
+  'tenders.offers.errors.acceptFailed': 'प्रस्ताव स्वीकार करने में विफल। कृपया पुनः प्रयास करें।',
+
+  'tenders.offers.noResponses': 'कोई निविदा प्रस्ताव नहीं मिला।',
+  'tenders.offers.response': 'प्रतिक्रिया',
+  'tenders.offers.responses': 'प्रतिक्रियाएं',
+
+  'tenders.form.title.new': 'नई निविदा बनाएं',
+  'tenders.form.title.edit': 'निविदा संपादित करें',
+  'tenders.form.title.cancel': 'निविदा रद्द करें',
+
+  'tenders.form.fields.aircraft': 'विमान',
+  'tenders.form.fields.selectAircraft': 'विमान चुनें',
+  'tenders.form.fields.airport': 'हवाई अड्डा',
+  'tenders.form.fields.selectAirport': 'हवाई अड्डा चुनें',
+  'tenders.form.fields.gallons': 'आवश्यक गैलन',
+  'tenders.form.fields.targetPrice': 'लक्षित मूल्य',
+  'tenders.form.fields.annual': 'वार्षिक',
+  'tenders.form.fields.startDate': 'प्रारंभ तिथि',
+  'tenders.form.fields.endDate': 'समाप्ति तिथि (वैकल्पिक)',
+  'tenders.form.fields.description': 'विवरण',
+  'tenders.form.fields.selectFbos': 'निविदा भेजने के लिए FBO चुनें',
+
+  'tenders.form.buttons.cancel': 'रद्द करें',
+  'tenders.form.buttons.create': 'निविदा बनाएं',
+  'tenders.form.buttons.update': 'निविदा अपडेट करें',
+  'tenders.form.buttons.creating': 'बना रहे हैं...',
+  'tenders.form.buttons.edit': 'संपादित करें',
+  'tenders.form.buttons.cancelTender': 'निविदा रद्द करें',
+  'tenders.form.buttons.close': 'बंद करें',
+  'tenders.form.buttons.keepIt': 'नहीं, रखें',
+  'tenders.form.buttons.cancelling': 'रद्द कर रहे हैं...',
+  'tenders.form.buttons.confirmCancel': 'हाँ, निविदा रद्द करें',
+
+  'tenders.form.confirmCancel': 'क्या आप वाकई इस निविदा को रद्द करना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।',
+
+  'tenders.form.errors.invalidDates': 'समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए',
+  'tenders.form.errors.noFboSelected': 'कृपया कम से कम एक FBO चुनें',
+};

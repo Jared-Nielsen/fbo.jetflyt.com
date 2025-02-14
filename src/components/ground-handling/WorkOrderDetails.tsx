@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 interface WorkOrderDetailsProps {
   workOrder: WorkOrder;
   onClose: () => void;
-  onWorkOrderUpdated: () => void;
+  onWorkOrderUpdated: () => Promise<void>;
 }
 
 export function WorkOrderDetails({ workOrder, onClose, onWorkOrderUpdated }: WorkOrderDetailsProps) {
@@ -19,9 +19,6 @@ export function WorkOrderDetails({ workOrder, onClose, onWorkOrderUpdated }: Wor
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation();
-
-  // Find accepted FBO association if it exists
-  const acceptedFBO = workOrder.fbo_associations.find(assoc => assoc.status === 'accepted');
 
   const handleStatusUpdate = async (newStatus: WorkOrder['status']) => {
     try {
@@ -258,7 +255,7 @@ export function WorkOrderDetails({ workOrder, onClose, onWorkOrderUpdated }: Wor
             initialData={{
               aircraft_id: workOrder.aircraft_id,
               service_id: workOrder.service_id,
-              selected_fbos: workOrder.fbo_associations.map(assoc => assoc.fbo_id),
+              selected_fbos: workOrder.fbo_associations.map((assoc: { fbo_id: string }) => assoc.fbo_id),
               quantity: workOrder.quantity,
               description: workOrder.description,
               requested_date: workOrder.requested_date,

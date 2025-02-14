@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Pencil, Trash2, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Aircraft } from '../../types/aircraft';

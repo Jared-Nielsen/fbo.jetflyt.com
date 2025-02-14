@@ -41,7 +41,8 @@ export function EditLegModal({ isOpen, onClose, leg, onLegUpdated }: EditLegModa
       <LegForm 
         initialData={leg}
         onSubmit={handleSubmit} 
-        onCancel={onClose} 
+        onCancel={onClose}
+        routeId={leg.route_id}
       />
     </Modal>
   );

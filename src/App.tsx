@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy } from 'react';
@@ -22,6 +23,9 @@ const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsConditions = lazy(() => import('./pages/legal/TermsConditions'));
 const ContactPage = lazy(() => import('./pages/contact/ContactPage'));
 const SupportPage = lazy(() => import('./pages/support/SupportPage'));
+const TenderRequestsPage = lazy(() => import('./pages/fbo/TenderRequestsPage'));
+const HandlingRequestsPage = lazy(() => import('./pages/fbo/HandlingRequestsPage'));
+const FBOReportsPage = lazy(() => import('./pages/fbo/ReportsPage'));
 
 export default function App() {
   return (
@@ -47,6 +51,9 @@ export default function App() {
                   <Route path="/ground-handling" element={<GroundHandlingPage />} />
                   <Route path="/fleet-registration" element={<FleetRegistrationPage />} />
                   <Route path="/reports" element={<ReportsPage />} />
+                  <Route path="/fbo/tender-requests" element={<TenderRequestsPage />} />
+                  <Route path="/fbo/handling-requests" element={<HandlingRequestsPage />} />
+                  <Route path="/fbo/reports" element={<FBOReportsPage />} />
                 </Route>
               </Route>
 

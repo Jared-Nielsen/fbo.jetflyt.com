@@ -1,0 +1,28 @@
+
+export const fleet = {
+  'fleet.title': 'Gestão de Frota',
+  'fleet.subtitle': 'Gerencie as informações e especificações da sua frota de aeronaves.',
+  'fleet.addAircraft': 'Adicionar Aeronave',
+  'fleet.uploadExcel': 'Enviar Excel',
+  'fleet.downloadTemplate': 'Baixar Modelo',
+  'fleet.confirmDelete': 'Tem certeza que deseja excluir esta aeronave?',
+  'fleet.uploadSuccess': 'Dados da aeronave enviados com sucesso',
+  'fleet.errors.saveFailed': 'Falha ao salvar aeronave. Por favor, tente novamente.',
+  'fleet.errors.deleteFailed': 'Falha ao excluir aeronave. Por favor, tente novamente.',
+  'fleet.errors.uploadFailed': 'Falha ao enviar dados. Verifique o formato e tente novamente.',
+
+  'fleet.details.title': 'Detalhes da Aeronave',
+  'fleet.details.registration': 'Matrícula',
+  'fleet.details.edit': 'Editar',
+  'fleet.details.viewOnMap': 'Ver no Mapa',
+  'fleet.details.aircraftType': 'Tipo de Aeronave',
+  'fleet.details.manufacturer': 'Fabricante',
+  'fleet.details.year': 'Ano',
+  'fleet.details.engineType': 'Tipo de Motor',
+  'fleet.details.fuelType': 'Tipo de Combustível',
+  'fleet.details.fuelCapacity': 'Capacidade de Combustível',
+  'fleet.details.maxRange': 'Alcance Máximo',
+  'fleet.details.currentLocation': 'Localização Atual',
+  'fleet.details.locationNotSet': 'Localização não definida',
+  'fleet.details.modelPreview': 'Visualização do Modelo 3D',
+};

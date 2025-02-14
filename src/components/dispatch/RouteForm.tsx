@@ -2,25 +2,36 @@ import { useState } from 'react';
 import { FormField } from '../shared/FormField';
 import { FormSelect } from '../shared/FormSelect';
 import { useTransitTypes } from '../../hooks/useTransitTypes';
-import type { Route } from '../../types/trip';
+import type { Route, TransitType } from '../../types/trip';
 
 interface RouteFormProps {
   initialData?: Route;
   onSubmit: (data: Omit<Route, 'id' | 'auth_id' | 'created_at' | 'updated_at' | 'legs'>) => Promise<void>;
   onCancel: () => void;
+  tripId: string; // Add this prop
 }
 
-export function RouteForm({ initialData, onSubmit, onCancel }: RouteFormProps) {
+export function RouteForm({ initialData, onSubmit, onCancel, tripId }: RouteFormProps) {
   const { transitTypes, loading } = useTransitTypes();
   const [formData, setFormData] = useState({
     name: initialData?.name || '',
     description: initialData?.description || '',
-    transit_type_id: initialData?.transit_type_id || ''
+    transit_type_id: initialData?.transit_type_id || '',
+    trip_id: tripId,
+    transit_type: initialData?.transit_type || null as TransitType | null
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit(formData);
+    const selectedTransitType = transitTypes.find(t => t.id === formData.transit_type_id);
+    if (!selectedTransitType) {
+      console.error('Transit type not found');
+      return;
+    }
+    await onSubmit({
+      ...formData,
+      transit_type: selectedTransitType
+    });
   };
 
   if (loading) {
@@ -46,7 +57,7 @@ export function RouteForm({ initialData, onSubmit, onCancel }: RouteFormProps) {
         <option value="">Select transit type</option>
         {transitTypes.map(type => (
           <option key={type.id} value={type.id}>
-            {type.name.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+            {type.name.replace('_', ' ').replace(/\b\w/g, letter => letter.toUpperCase())}
           </option>
         ))}
       </FormSelect>

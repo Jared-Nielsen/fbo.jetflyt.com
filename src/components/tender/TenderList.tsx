@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TenderStatus } from './TenderStatus';
 import { TenderDetails } from './TenderDetails';
 import type { Tender } from '../../types/tender';
-import { useTender } from '../../hooks/useTender';
 import { useTranslation } from 'react-i18next';
 
 interface TenderListProps {

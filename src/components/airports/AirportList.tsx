@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ICAO } from '../../types/icao';
 import { TableHeader } from './TableHeader';
 import { TableRow } from './TableRow';

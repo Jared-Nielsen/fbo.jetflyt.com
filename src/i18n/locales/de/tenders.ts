@@ -1,0 +1,76 @@
+export const tenders = {
+  'tenders.title': 'Ausschreibungen',
+  'tenders.subtitle': 'Erstellen und verwalten Sie Ihre Kraftstoffausschreibungen über mehrere FBOs.',
+  'tenders.newTender': 'Neue Ausschreibung',
+  
+  'tenders.status.title': 'Status',
+  'tenders.status.pending': 'Ausstehend',
+  'tenders.status.active': 'Aktiv',
+  'tenders.status.accepted': 'Angenommen',
+  'tenders.status.rejected': 'Abgelehnt',
+  'tenders.status.cancelled': 'Storniert',
+
+  'tenders.details.title': 'Ausschreibungsdetails',
+  'tenders.details.created': 'Erstellt am',
+  'tenders.details.aircraft': 'Flugzeug',
+  'tenders.details.location': 'Standort',
+  'tenders.details.fuelRequest': 'Kraftstoffanfrage',
+  'tenders.details.bestPrice': 'Bester aktueller Preis',
+  'tenders.details.fboResponses': 'FBO-Antworten',
+  'tenders.details.description': 'Beschreibung',
+  'tenders.details.totalValue': 'Gesamtwert',
+  'tenders.details.tenderId': 'Ausschreibungs-ID',
+
+  'tenders.offers.columns.fbo': 'FBO',
+  'tenders.offers.columns.location': 'Standort',
+  'tenders.offers.columns.offerPrice': 'Angebotspreis',
+  'tenders.offers.columns.totalCost': 'Gesamtkosten',
+  'tenders.offers.columns.taxesAndFees': 'Steuern & Gebühren',
+  'tenders.offers.columns.finalCost': 'Endkosten',
+  'tenders.offers.columns.actions': 'Aktionen',
+
+  'tenders.offers.buttons.accept': 'Annehmen',
+  'tenders.offers.buttons.sendContract': 'Vertrag senden',
+  'tenders.offers.buttons.close': 'Schließen',
+
+  'tenders.offers.modal.contractTitle': 'Vertragsbestätigung',
+  'tenders.offers.modal.contractSent': 'Der Vertrag wurde an {{fbo}} gesendet',
+
+  'tenders.offers.errors.acceptFailed': 'Annahme des Angebots fehlgeschlagen. Bitte versuchen Sie es erneut.',
+
+  'tenders.offers.noResponses': 'Keine Ausschreibungsangebote gefunden.',
+  'tenders.offers.response': 'Antwort',
+  'tenders.offers.responses': 'Antworten',
+
+  'tenders.form.title.new': 'Neue Ausschreibung erstellen',
+  'tenders.form.title.edit': 'Ausschreibung bearbeiten',
+  'tenders.form.title.cancel': 'Ausschreibung stornieren',
+
+  'tenders.form.fields.aircraft': 'Flugzeug',
+  'tenders.form.fields.selectAircraft': 'Flugzeug auswählen',
+  'tenders.form.fields.airport': 'Flughafen',
+  'tenders.form.fields.selectAirport': 'Flughafen auswählen',
+  'tenders.form.fields.gallons': 'Benötigte Gallonen',
+  'tenders.form.fields.targetPrice': 'Zielpreis',
+  'tenders.form.fields.annual': 'Jährlich',
+  'tenders.form.fields.startDate': 'Startdatum',
+  'tenders.form.fields.endDate': 'Enddatum (Optional)',
+  'tenders.form.fields.description': 'Beschreibung',
+  'tenders.form.fields.selectFbos': 'FBOs für Ausschreibung auswählen',
+
+  'tenders.form.buttons.cancel': 'Abbrechen',
+  'tenders.form.buttons.create': 'Ausschreibung erstellen',
+  'tenders.form.buttons.update': 'Ausschreibung aktualisieren',
+  'tenders.form.buttons.creating': 'Wird erstellt...',
+  'tenders.form.buttons.edit': 'Bearbeiten',
+  'tenders.form.buttons.cancelTender': 'Ausschreibung stornieren',
+  'tenders.form.buttons.close': 'Schließen',
+  'tenders.form.buttons.keepIt': 'Nein, behalten',
+  'tenders.form.buttons.cancelling': 'Wird storniert...',
+  'tenders.form.buttons.confirmCancel': 'Ja, Ausschreibung stornieren',
+
+  'tenders.form.confirmCancel': 'Sind Sie sicher, dass Sie diese Ausschreibung stornieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+
+  'tenders.form.errors.invalidDates': 'Das Enddatum muss nach dem Startdatum liegen',
+  'tenders.form.errors.noFboSelected': 'Bitte wählen Sie mindestens einen FBO aus',
+};

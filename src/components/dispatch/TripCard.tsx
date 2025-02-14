@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Modal } from '../shared/Modal';
 import { TripStatus } from './TripStatus';
 import { TripForm } from './TripForm';
-import { useTrip } from '../../hooks/useTrip';
 import type { Trip } from '../../types/trip';
 import { useTranslation } from 'react-i18next';
 
@@ -62,7 +61,7 @@ export function TripCard({ trip, onEdit, onTripUpdated }: TripCardProps) {
       >
         <TripForm
           initialData={trip}
-          onSubmit={async (data) => {
+          onSubmit={async () => {
             await onTripUpdated();
             setShowEditModal(false);
           }}

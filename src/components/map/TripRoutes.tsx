@@ -4,6 +4,7 @@ import L from 'leaflet';
 import type { Trip } from '../../types/trip';
 import { useRoutes } from '../../hooks/useRoutes';
 import { RoutePolyline } from './RoutePolyline';
+import type { LatLngTuple } from 'leaflet';
 
 interface TripRoutesProps {
   trip: Trip;
@@ -22,10 +23,10 @@ export function TripRoutes({ trip }: TripRoutesProps) {
 
   useEffect(() => {
     if (!loading && routes.length > 0) {
-      const allCoordinates = routes.flatMap(route => 
+      const allCoordinates: LatLngTuple[] = routes.flatMap(route => 
         route.legs.map(leg => [
-          [leg.origin.latitude, leg.origin.longitude],
-          [leg.destination.latitude, leg.destination.longitude]
+          [leg.origin.latitude, leg.origin.longitude] as LatLngTuple,
+          [leg.destination.latitude, leg.destination.longitude] as LatLngTuple
         ])
       ).flat();
 

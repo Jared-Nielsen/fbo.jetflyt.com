@@ -1,3 +1,5 @@
+import type { ICAO } from './icao';
+
 export interface TransitType {
   id: string;
   name: string;

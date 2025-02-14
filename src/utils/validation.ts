@@ -12,16 +12,13 @@ export function validateAircraft(data: Partial<Aircraft>): string | null {
   if (!data.manufacturer?.trim()) {
     return 'Manufacturer is required';
   }
-  if (!data.model?.trim()) {
-    return 'Model is required';
-  }
-  if (!data.year || data.year < 1900 || data.year > new Date().getFullYear()) {
+  if (data.year && (data.year < 1900 || data.year > new Date().getFullYear())) {
     return 'Invalid year';
   }
   if (!data.fuel_type_id) {
     return 'Fuel type is required';
   }
-  if (!data.fuel_capacity || data.fuel_capacity <= 0) {
+  if (data.fuel_capacity && data.fuel_capacity <= 0) {
     return 'Invalid fuel capacity';
   }
   return null;
@@ -47,7 +44,8 @@ export function validateICAOCode(code: string): boolean {
   return /^[A-Z]{4}$/.test(code);
 }
 
-export function validateCoordinates(lat: number, lng: number): boolean {
+export function validateCoordinates(lat?: number, lng?: number): boolean {
+  if (lat === undefined || lng === undefined) return false;
   return (
     !isNaN(lat) && 
     !isNaN(lng) && 

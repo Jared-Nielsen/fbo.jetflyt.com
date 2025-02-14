@@ -27,12 +27,12 @@ export interface Aircraft {
   type_id: string;
   type?: AircraftType;
   manufacturer: string;
-  model: string;
-  year: number;
-  max_range: number;
+  model: string | null;
+  year: number | null;
+  max_range: number | null;
   fuel_type_id: string;
   fuel_type?: FuelType;
-  fuel_capacity: number;
+  fuel_capacity: number | null;
   engine_type_id: string;
   engine_type?: AircraftEngineType;
   latitude: number;

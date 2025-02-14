@@ -1,24 +1,35 @@
-import React from 'react';
+
+import { Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { Tender } from '../../types/tender';
 
 interface TenderStatusProps {
-  status: Tender['status'];
+  status: string;
 }
 
 export function TenderStatus({ status }: TenderStatusProps) {
   const { t } = useTranslation();
 
-  const statusStyles = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    active: 'bg-blue-100 text-blue-800',
-    accepted: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800'
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'accepted':
+        return <CheckCircle className="h-5 w-5 text-green-500" />;
+      case 'rejected':
+        return <XCircle className="h-5 w-5 text-red-500" />;
+      case 'pending':
+        return <Clock className="h-5 w-5 text-yellow-500" />;
+      case 'submitted':
+        return <Clock className="h-5 w-5 text-green-500" />;
+      default:
+        return <AlertCircle className="h-5 w-5 text-gray-500" />;
+    }
   };
 
   return (
-    <span className={`inline-block px-2 py-1 text-sm rounded-full ${statusStyles[status]}`}>
-      {t(`tenders.status.${status}`)}
-    </span>
+    <div className="flex items-center gap-2">
+      {getStatusIcon(status)}
+      <span>
+        {t(`fbo.tenderRequests.status.${status}`)}
+      </span>
+    </div>
   );
 }

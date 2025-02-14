@@ -41,7 +41,8 @@ export function EditRouteModal({ isOpen, onClose, route, onRouteUpdated }: EditR
       <RouteForm 
         initialData={route}
         onSubmit={handleSubmit} 
-        onCancel={onClose} 
+        onCancel={onClose}
+        tripId={route.trip_id}
       />
     </Modal>
   );

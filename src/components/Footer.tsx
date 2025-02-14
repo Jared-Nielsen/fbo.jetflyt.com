@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -19,18 +20,8 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks.title')}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/fbos" className="text-gray-400 hover:text-white">
-                  {t('footer.quickLinks.fboMap')}
-                </Link>
-              </li>
-              <li>
-                <Link to="/icaos" className="text-gray-400 hover:text-white">
-                  {t('footer.quickLinks.airports')}
-                </Link>
-              </li>
-              <li>
-                <Link to="/dispatch" className="text-gray-400 hover:text-white">
-                  {t('footer.quickLinks.dispatch')}
+                <Link to="/contact" className="text-gray-400 hover:text-white">
+                  {t('footer.quickLinks.contact')}
                 </Link>
               </li>
               <li>

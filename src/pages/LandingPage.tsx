@@ -1,12 +1,82 @@
+
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plane, FileText, BarChart3, Briefcase } from 'lucide-react';
+import { Plane, ClipboardList, Building, BarChart3 } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { FBORegistrationModal } from '../components/fbo/FBORegistrationModal';
+import { useFBOStatus } from '../hooks/useFBOStatus';
+import { supabase } from '../lib/supabase';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { STORAGE_KEYS } from '../utils/storage';
+
+interface SingleFBOResponse {
+  id: string;
+  status: string;
+  fbos: {
+    id: string;
+    name: string;
+  };
+}
 
 export default function LandingPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const [showModal, setShowModal] = useState(false);
+  const { status: fboStatus } = useFBOStatus();
+  const [fboName, setFBOName] = useState<string | null>(null);
+  const [selectedFBO] = useLocalStorage(STORAGE_KEYS.FBOS, null);
+  
+  useEffect(() => {
+    const fetchAndCacheFBO = async () => {
+      if (!user) return;
+      
+      try {
+        const { data: rawData, error } = await supabase
+          .from('user_fbos')
+          .select(`
+            id,
+            status,
+            fbos!inner (
+              id,
+              name
+            )
+          `)
+          .eq('user_id', user.id)
+          .limit(1)
+          .single();
+
+        if (error) {
+          console.error('Error fetching FBO:', error);
+          return;
+        }
+
+        // Ensure we're getting a single FBO response
+        const data = rawData as unknown as SingleFBOResponse;
+
+        if (data?.fbos) {
+          const fboData = {
+            id: data.fbos.id,
+            name: data.fbos.name,
+            status: data.status
+          };
+          
+          // Cache in localStorage
+          localStorage.setItem('jetflyt_fbo', JSON.stringify(fboData));
+          setFBOName(data.fbos.name);
+        }
+      } catch (err) {
+        console.error('Error in fetchAndCacheFBO:', err);
+      }
+    };
+
+    fetchAndCacheFBO();
+  }, [user]);
+
+  const canAccessFeatures = fboStatus === 'approved';
+  const isPending = fboStatus === 'requested';
+  const canAccessFBOFeatures = selectedFBO !== null;
 
   return (
     <>
@@ -19,61 +89,115 @@ export default function LandingPage() {
           <div className="text-center">
             <Plane className="h-20 w-20 mx-auto mb-8" />
             <h1 className="text-5xl font-bold mb-4">{t('landing.title')}</h1>
-            <p className="text-xl mb-12">{t('landing.subtitle')}</p>
+            <p className="text-xl mb-6">{t('landing.subtitle')}</p>
+            
+            {user && fboName && (
+              <div className="text-lg mb-6">
+                Welcome to <span className="font-semibold">{fboName}</span>
+              </div>
+            )}
+            
+            {user && !canAccessFeatures && !isPending && (
+              <button
+                onClick={() => setShowModal(true)}
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50"
+              >
+                {t('fbo.registration.registerButton')}
+              </button>
+            )}
+            
+            {isPending && (
+              <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-md inline-block">
+                {t('fbo.registration.pendingApproval')}
+              </div>
+            )}
+
+            {user && canAccessFeatures && !selectedFBO && (
+              <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-md inline-block">
+                Please select an FBO from the dropdown above to access features
+              </div>
+            )}
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 mt-16">
-            {/* Protected features */}
+          <div className="grid md:grid-cols-3 gap-8 mt-16">
             {user ? (
               <>
-                <Link to="/tender-offer" className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/20 transition">
-                  <FileText className="h-12 w-12 mb-4" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.tenders.title')}</h2>
-                  <p>{t('landing.features.tenders.description')}</p>
-                </Link>
+                {/* FBO-specific cards */}
+                <div
+                  className={`bg-white/10 backdrop-blur-lg rounded-xl p-6 ${
+                    !canAccessFBOFeatures && 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  {canAccessFBOFeatures ? (
+                    <Link to="/fbo/tender-requests" className="block">
+                      <ClipboardList className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboTenders.title')}</h2>
+                      <p>{t('landing.features.fboTenders.description')}</p>
+                    </Link>
+                  ) : (
+                    <div>
+                      <ClipboardList className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboTenders.title')}</h2>
+                      <p>{t('landing.features.fboTenders.description')}</p>
+                    </div>
+                  )}
+                </div>
 
-                <Link to="/ground-handling" className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/20 transition">
-                  <Briefcase className="h-12 w-12 mb-4" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.handling.title')}</h2>
-                  <p>{t('landing.features.handling.description')}</p>
-                </Link>
+                <div
+                  className={`bg-white/10 backdrop-blur-lg rounded-xl p-6 ${
+                    !canAccessFBOFeatures && 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  {canAccessFBOFeatures ? (
+                    <Link to="/fbo/handling-requests" className="block">
+                      <Building className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboHandling.title')}</h2>
+                      <p>{t('landing.features.fboHandling.description')}</p>
+                    </Link>
+                  ) : (
+                    <div>
+                      <Building className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboHandling.title')}</h2>
+                      <p>{t('landing.features.fboHandling.description')}</p>
+                    </div>
+                  )}
+                </div>
 
-                <Link to="/fleet-registration" className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/20 transition">
-                  <Plane className="h-12 w-12 mb-4" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fleet.title')}</h2>
-                  <p>{t('landing.features.fleet.description')}</p>
-                </Link>
-
-                <Link to="/reports" className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/20 transition">
-                  <BarChart3 className="h-12 w-12 mb-4" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.reports.title')}</h2>
-                  <p>{t('landing.features.reports.description')}</p>
-                </Link>
+                <div
+                  className={`bg-white/10 backdrop-blur-lg rounded-xl p-6 ${
+                    !canAccessFBOFeatures && 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  {canAccessFBOFeatures ? (
+                    <Link to="/fbo/reports" className="block">
+                      <BarChart3 className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboReports.title')}</h2>
+                      <p>{t('landing.features.fboReports.description')}</p>
+                    </Link>
+                  ) : (
+                    <div>
+                      <BarChart3 className="h-12 w-12 mb-4" />
+                      <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboReports.title')}</h2>
+                      <p>{t('landing.features.fboReports.description')}</p>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <>
                 <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6">
-                  <FileText className="h-12 w-12 mb-4 opacity-50" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.tenders.title')}</h2>
-                  <p className="mb-4">{t('landing.features.tenders.description')}</p>
+                  <ClipboardList className="h-12 w-12 mb-4 opacity-50" />
+                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboTenders.title')}</h2>
+                  <p className="mb-4">{t('landing.features.fboTenders.description')}</p>
                   <Link to="/auth/login" className="text-sm text-blue-300 hover:text-blue-200">
                     {t('landing.auth.signInCta')}
                   </Link>
                 </div>
 
                 <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6">
-                  <Briefcase className="h-12 w-12 mb-4 opacity-50" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.handling.title')}</h2>
-                  <p className="mb-4">{t('landing.features.handling.description')}</p>
-                  <Link to="/auth/login" className="text-sm text-blue-300 hover:text-blue-200">
-                    {t('landing.auth.signInCta')}
-                  </Link>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6">
-                  <Plane className="h-12 w-12 mb-4 opacity-50" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fleet.title')}</h2>
-                  <p className="mb-4">{t('landing.features.fleet.description')}</p>
+                  <Building className="h-12 w-12 mb-4 opacity-50" />
+                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboHandling.title')}</h2>
+                  <p className="mb-4">{t('landing.features.fboHandling.description')}</p>
                   <Link to="/auth/login" className="text-sm text-blue-300 hover:text-blue-200">
                     {t('landing.auth.signInCta')}
                   </Link>
@@ -81,8 +205,8 @@ export default function LandingPage() {
 
                 <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6">
                   <BarChart3 className="h-12 w-12 mb-4 opacity-50" />
-                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.reports.title')}</h2>
-                  <p className="mb-4">{t('landing.features.reports.description')}</p>
+                  <h2 className="text-2xl font-semibold mb-2">{t('landing.features.fboReports.title')}</h2>
+                  <p className="mb-4">{t('landing.features.fboReports.description')}</p>
                   <Link to="/auth/login" className="text-sm text-blue-300 hover:text-blue-200">
                     {t('landing.auth.signInCta')}
                   </Link>
@@ -100,6 +224,12 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
+      <FBORegistrationModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSuccess={() => window.location.reload()}
+      />
     </>
   );
 }

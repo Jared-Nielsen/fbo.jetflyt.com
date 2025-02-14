@@ -1,6 +1,7 @@
 import { Polyline, Popup } from 'react-leaflet';
 import type { Leg, Route } from '../../types/trip';
 import { LegPopup } from './LegPopup';
+import type { LatLngTuple } from 'leaflet';
 
 interface RoutePolylineProps {
   leg: Leg;
@@ -9,7 +10,7 @@ interface RoutePolylineProps {
 }
 
 export function RoutePolyline({ leg, route, color }: RoutePolylineProps) {
-  const coordinates = [
+  const coordinates: [LatLngTuple, LatLngTuple] = [
     [leg.origin.latitude, leg.origin.longitude],
     [leg.destination.latitude, leg.destination.longitude]
   ];
@@ -17,10 +18,7 @@ export function RoutePolyline({ leg, route, color }: RoutePolylineProps) {
   return (
     <Polyline
       positions={coordinates}
-      color={color}
-      weight={3}
-      opacity={0.8}
-      zIndex={1000}
+      pathOptions={{ color, weight: 3, opacity: 0.8 }}
     >
       <Popup>
         <LegPopup 

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ICAO } from '../../types/icao';
 
 interface TableRowProps {
@@ -18,10 +17,10 @@ export function TableRow({ airport }: TableRowProps) {
         {airport.state}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {airport.latitude.toFixed(4)}
+        {airport.latitude != null ? airport.latitude.toFixed(4) : 'N/A'}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {airport.longitude.toFixed(4)}
+        {airport.longitude != null ? airport.longitude.toFixed(4) : 'N/A'}
       </td>
     </tr>
   );

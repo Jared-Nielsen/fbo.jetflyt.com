@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { WorkOrderStatus } from './WorkOrderStatus';
 import { WorkOrderDetails } from './WorkOrderDetails';
 import type { WorkOrder } from '../../types/workOrder';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 interface WorkOrderListProps {
   workOrders: WorkOrder[];
-  onWorkOrdersUpdated: () => void;
+  onWorkOrdersUpdated: () => Promise<void>;
 }
 
 export function WorkOrderList({ workOrders, onWorkOrdersUpdated }: WorkOrderListProps) {

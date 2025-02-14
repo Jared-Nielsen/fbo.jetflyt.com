@@ -1,0 +1,40 @@
+export const auth = {
+  'auth.signIn.title': 'ログイン',
+  'auth.signIn.email': 'メールアドレス',
+  'auth.signIn.password': 'パスワード',
+  'auth.signIn.forgotPassword': 'パスワードをお忘れですか？',
+  'auth.signIn.submit': 'ログイン',
+  'auth.signIn.newUser': '新規ユーザーですか？',
+  'auth.signIn.createAccount': 'アカウントを作成',
+  
+  'auth.signUp.title': 'アカウント作成',
+  'auth.signUp.name': '名前',
+  'auth.signUp.email': 'メールアドレス',
+  'auth.signUp.password': 'パスワード',
+  'auth.signUp.confirmPassword': 'パスワード（確認）',
+  'auth.signUp.submit': 'アカウントを作成',
+  'auth.signUp.existingUser': 'すでにアカウントをお持ちですか？',
+  'auth.signUp.signIn': 'ログイン',
+
+  'auth.resetPassword.title': 'パスワードのリセット',
+  'auth.resetPassword.email': 'メールアドレス',
+  'auth.resetPassword.submit': 'リセットリンクを送信',
+  'auth.resetPassword.backToSignIn': 'ログインに戻る',
+
+  'auth.errors.requiredFields': '必須項目をすべて入力してください',
+  'auth.errors.invalidCredentials': 'メールアドレスまたはパスワードが無効です',
+  'auth.errors.generalError': 'エラーが発生しました。もう一度お試しください。',
+  'auth.signInToJetFlyt': 'JetFlytにログイン',
+  'auth.signInDescription': 'ログインして燃料入札を管理',
+  'auth.or': 'または',
+
+  'auth.placeholder.email': 'メールアドレスを入力してください',
+  'auth.placeholder.password': 'パスワードを入力してください',
+  'auth.placeholder.confirmPassword': 'パスワードを確認してください',
+  'auth.placeholder.name': '氏名を入力してください',
+  'auth.signingIn': 'ログイン中...',
+  'auth.emailAddress': 'メールアドレス',
+  'auth.password': 'パスワード',
+  'auth.signIn': 'ログイン',
+  'auth.createAccount': 'アカウントを作成'
+};

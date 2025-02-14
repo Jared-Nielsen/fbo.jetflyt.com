@@ -25,7 +25,7 @@ export function AddTripModal({ isOpen, onClose, onTripAdded }: AddTripModalProps
         </div>
       )}
       <TripForm
-        onSubmit={async (data) => {
+        onSubmit={async () => {
           try {
             await onTripAdded();
             onClose();

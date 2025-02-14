@@ -1,3 +1,4 @@
+
 import { supabase } from '../lib/supabase';
 import type { FBO } from '../types/fbo';
 import { STORAGE_KEYS } from '../utils/storage';
@@ -29,7 +30,11 @@ export function useFBOData() {
         `)
         .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching FBOs:', error);
+        throw error;
+      }
+      
       if (!data || data.length === 0) {
         hasMore = false;
       } else {
@@ -39,10 +44,10 @@ export function useFBOData() {
     }
 
     if (allData.length === 0) {
-      throw new Error('No data received from the database');
+      throw new Error('No FBO data received from the database');
     }
 
-    return allData;
+    return allData as FBO[];
   };
 
   return useLocalStorageCache<FBO[]>(STORAGE_KEYS.FBOS, fetchFBOs);

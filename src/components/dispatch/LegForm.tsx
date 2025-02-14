@@ -8,9 +8,10 @@ interface LegFormProps {
   initialData?: Leg;
   onSubmit: (data: Omit<Leg, 'id' | 'auth_id' | 'created_at' | 'updated_at'>) => Promise<void>;
   onCancel: () => void;
+  routeId: string; // Add this prop
 }
 
-export function LegForm({ initialData, onSubmit, onCancel }: LegFormProps) {
+export function LegForm({ initialData, onSubmit, onCancel, routeId }: LegFormProps) {
   const { data: airports, loading } = useICAOData();
   const [formData, setFormData] = useState({
     origin_id: initialData?.origin_id || '',
@@ -20,9 +21,12 @@ export function LegForm({ initialData, onSubmit, onCancel }: LegFormProps) {
       : new Date().toISOString().slice(0, 16),
     scheduled_arrival: initialData?.scheduled_arrival
       ? new Date(initialData.scheduled_arrival).toISOString().slice(0, 16)
-      : new Date(Date.now() + 3600000).toISOString().slice(0, 16), // Default to 1 hour later
+      : new Date(Date.now() + 3600000).toISOString().slice(0, 16),
     status: initialData?.status || 'scheduled',
-    notes: initialData?.notes || ''
+    notes: initialData?.notes || '',
+    route_id: routeId,
+    origin: initialData?.origin || null,
+    destination: initialData?.destination || null
   });
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -44,9 +48,20 @@ export function LegForm({ initialData, onSubmit, onCancel }: LegFormProps) {
       return;
     }
 
+    // Find the selected airports
+    const origin = airports?.find(a => a.id === formData.origin_id);
+    const destination = airports?.find(a => a.id === formData.destination_id);
+
+    if (!origin || !destination) {
+      setValidationError('Both origin and destination airports must be selected');
+      return;
+    }
+
     setValidationError(null);
     await onSubmit({
       ...formData,
+      origin,
+      destination,
       scheduled_departure: new Date(formData.scheduled_departure).toISOString(),
       scheduled_arrival: new Date(formData.scheduled_arrival).toISOString()
     });

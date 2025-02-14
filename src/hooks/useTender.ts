@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import type { Tender, FBOTender } from '../types/tender';
 
 export function useTender() {
   const [loading, setLoading] = useState(false);

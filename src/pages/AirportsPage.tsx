@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useICAOData } from '../hooks/useICAOData';
 import { SearchBar } from '../components/airports/SearchBar';
 import { AirportList } from '../components/airports/AirportList';
@@ -18,6 +18,13 @@ export default function AirportsPage() {
     key: 'code',
     direction: 'asc'
   });
+
+  const handleSort = (key: keyof ICAO) => {
+    setSortConfig(prevConfig => ({
+      key,
+      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
+    }));
+  };
 
   const filteredAndSortedAirports = useMemo(() => {
     if (!airports) return [];
@@ -40,6 +47,10 @@ export default function AirportsPage() {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
 
+      if (!aValue && !bValue) return 0;
+      if (!aValue) return 1;
+      if (!bValue) return -1;
+
       if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
@@ -47,13 +58,6 @@ export default function AirportsPage() {
 
     return filtered;
   }, [airports, searchQuery, sortConfig]);
-
-  const handleSort = (key: keyof ICAO) => {
-    setSortConfig(current => ({
-      key,
-      direction: current.key === key && current.direction === 'asc' ? 'desc' : 'asc'
-    }));
-  };
 
   if (!isSupabaseConfigured()) {
     return <NoSupabaseWarning />;

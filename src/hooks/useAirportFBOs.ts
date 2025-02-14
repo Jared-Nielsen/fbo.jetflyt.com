@@ -15,6 +15,7 @@ export function useAirportFBOs(icaoId: string) {
           .select(`
             id,
             name,
+            icao_id,
             latitude,
             longitude,
             address,
@@ -24,7 +25,19 @@ export function useAirportFBOs(icaoId: string) {
           .eq('icao_id', icaoId);
 
         if (supabaseError) throw supabaseError;
-        setFbos(data || []);
+        
+        const typedData: FBO[] = data?.map(item => ({
+          id: item.id,
+          name: item.name,
+          icao_id: item.icao_id,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          address: item.address,
+          country: item.country,
+          state: item.state
+        })) || [];
+        
+        setFbos(typedData);
       } catch (err) {
         console.error('Error fetching FBOs:', err);
         setError('Failed to load FBO data');

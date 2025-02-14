@@ -147,7 +147,7 @@ export function AircraftDetails({ aircraft, onClose, onAircraftUpdated }: Aircra
         >
           <AircraftForm
             initialData={aircraft}
-            onSubmit={async (data) => {
+            onSubmit={async () => {
               await onAircraftUpdated();
               setShowEditModal(false);
               onClose();

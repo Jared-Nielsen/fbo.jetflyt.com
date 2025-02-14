@@ -1,4 +1,3 @@
-import React from 'react';
 import { CollapsibleControl } from './CollapsibleControl';
 import { WeatherControl } from './WeatherControl';
 import { MapPin } from 'lucide-react';

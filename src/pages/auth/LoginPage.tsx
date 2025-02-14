@@ -31,9 +31,14 @@ export default function LoginPage() {
       navigate(from, { replace: true });
     } catch (err: any) {
       console.error('Login error:', err);
-      if (err?.name === 'AuthApiError' && err?.status === 400) {
-        setError(t('auth.errors.invalidCredentials'));
-      } else {
+      try {
+        const errorBody = err.body ? JSON.parse(err.body) : null;
+        if (errorBody?.message === 'Invalid login credentials') {
+          setError("Your password is not correct. Please try again");
+        } else {
+          setError(t('auth.errors.generalError'));
+        }
+      } catch {
         setError(t('auth.errors.generalError'));
       }
     } finally {

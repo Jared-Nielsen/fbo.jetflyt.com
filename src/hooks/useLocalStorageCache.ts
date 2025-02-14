@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { CACHE_DURATION } from '../utils/storage';
 
@@ -21,19 +22,27 @@ export function useLocalStorageCache<T>(
         // Try to get from cache first
         const cached = localStorage.getItem(key);
         if (cached) {
-          const { data: cachedData, timestamp }: CacheData<T> = JSON.parse(cached);
-          const now = Date.now();
-          
-          // Check if cache is still valid
-          if (now - timestamp < CACHE_DURATION) {
-            setData(cachedData);
-            setLoading(false);
-            return;
+          try {
+            const { data: cachedData, timestamp }: CacheData<T> = JSON.parse(cached);
+            const now = Date.now();
+            
+            // Check if cache is still valid and contains data
+            if (cachedData && now - timestamp < CACHE_DURATION) {
+              setData(cachedData);
+              setLoading(false);
+              return;
+            }
+          } catch (parseError) {
+            console.error(`Error parsing cache for ${key}:`, parseError);
+            // Continue to fetch fresh data if parse fails
           }
         }
 
         // Fetch fresh data
         const freshData = await fetchData();
+        if (!freshData) {
+          throw new Error('No data received');
+        }
         
         // Save to cache
         const cacheData: CacheData<T> = {
