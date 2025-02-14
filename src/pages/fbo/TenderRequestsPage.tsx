@@ -18,6 +18,48 @@ export default function TenderRequestsPage() {
   const [loading, setLoading] = useState(true);
   const [cachedFBO, setCachedFBO] = useState<CachedFBO | null>(null);
 
+  const fetchTenders = async () => {
+    if (!cachedFBO?.id) {
+      setTenders([]);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      console.log('Fetching tenders for FBO:', cachedFBO.id);
+      
+      const { data, error } = await supabase
+        .from('fbo_tenders')
+        .select(`
+          *,
+          tender:tenders (
+            id,
+            auth_id,
+            gallons,
+            aircraft:aircraft_id (
+              id,
+              tail_number,
+              manufacturer,
+              model
+            )
+          )
+        `)
+        .eq('fbo_id', cachedFBO.id);
+
+      if (error) {
+        console.error('Error fetching tenders:', error);
+        return;
+      }
+
+      console.log('Fetched tenders with relations:', data);
+      setTenders(data || []);
+    } catch (err) {
+      console.error('Error fetching tenders:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     // Get FBO from localStorage
     const storedFBO = localStorage.getItem('jetflyt_fbo');
@@ -27,48 +69,6 @@ export default function TenderRequestsPage() {
   }, []);
 
   useEffect(() => {
-    const fetchTenders = async () => {
-      if (!cachedFBO?.id) {
-        setTenders([]);
-        setLoading(false);
-        return;
-      }
-
-      try {
-        console.log('Fetching tenders for FBO:', cachedFBO.id);
-        
-        const { data, error } = await supabase
-          .from('fbo_tenders')
-          .select(`
-            *,
-            tender:tenders (
-              id,
-              auth_id,
-              gallons,
-              aircraft:aircraft_id (
-                id,
-                tail_number,
-                manufacturer,
-                model
-              )
-            )
-          `)
-          .eq('fbo_id', cachedFBO.id);
-
-        if (error) {
-          console.error('Error fetching tenders:', error);
-          return;
-        }
-
-        console.log('Fetched tenders with relations:', data);
-        setTenders(data || []);
-      } catch (err) {
-        console.error('Error fetching tenders:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchTenders();
   }, [cachedFBO]); // Add cachedFBO to dependencies
 
@@ -124,6 +124,7 @@ export default function TenderRequestsPage() {
       ) : (
         <TenderRequestTable 
           tenders={tenders}
+          onDataUpdate={fetchTenders}
         />
       )}
     </div>

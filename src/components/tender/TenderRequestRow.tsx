@@ -7,9 +7,10 @@ import { supabase } from '../../lib/supabase';
 
 interface TenderRequestRowProps {
   tender: FBOTender;
+  onUpdate?: () => void; // Add callback prop
 }
 
-export function TenderRequestRow({ tender }: TenderRequestRowProps) {
+export function TenderRequestRow({ tender, onUpdate }: TenderRequestRowProps) {
   const [priceInput, setPriceInput] = useState(tender.counter_price ? tender.counter_price.toString() : '');
   const [taxesInput, setTaxesInput] = useState(tender.counter_taxes_and_fees ? tender.counter_taxes_and_fees.toString() : '');
   const [totalCost, setTotalCost] = useState(tender.counter_total_cost || null);
@@ -37,13 +38,18 @@ export function TenderRequestRow({ tender }: TenderRequestRowProps) {
           counter_price: parseFloat(priceInput),
           counter_taxes_and_fees: parseFloat(taxesInput),
           counter_total_cost: totalCost,
-          status: 'submitted' // Changed back to 'submitted' now that it's an allowed value
+          status: 'submitted'
         })
         .eq('id', tender.id);
 
       if (error) {
         console.error('Error submitting counter offer:', error);
+        return;
       }
+
+      // Call the onUpdate callback after successful submission
+      onUpdate?.();
+      
     } catch (err) {
       console.error('Error in handleSubmit:', err);
     } finally {

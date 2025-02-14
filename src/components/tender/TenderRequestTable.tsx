@@ -5,9 +5,10 @@ import { TenderRequestRow } from './TenderRequestRow';
 
 interface TenderRequestTableProps {
   tenders: FBOTender[];
+  onDataUpdate?: () => void;
 }
 
-export function TenderRequestTable({ tenders }: TenderRequestTableProps) {
+export function TenderRequestTable({ tenders, onDataUpdate }: TenderRequestTableProps) {
   const { t } = useTranslation();
 
   return (
@@ -45,6 +46,7 @@ export function TenderRequestTable({ tenders }: TenderRequestTableProps) {
                 <TenderRequestRow 
                   key={tender.id} 
                   tender={tender}
+                  onUpdate={onDataUpdate}
                 />
               ))}
             </tbody>
