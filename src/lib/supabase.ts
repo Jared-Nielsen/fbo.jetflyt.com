@@ -20,9 +20,10 @@ const fetchWithRetry = async (url: string, options: RequestInit, retries = 3) =>
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: true,
+    storageKey: 'supabase.auth.token',
+    storage: localStorage,
     autoRefreshToken: true,
-    detectSessionInUrl: true,
-    storage: localStorage // Explicitly set localStorage as the storage mechanism
+    detectSessionInUrl: true
   },
   global: {
     fetch: fetchWithRetry as typeof fetch

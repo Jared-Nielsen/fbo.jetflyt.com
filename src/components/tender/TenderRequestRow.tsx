@@ -1,9 +1,9 @@
-
 import type { FBOTender } from '../../types/tender';
 import { TenderStatus } from './TenderStatus';
 import { formatCurrency } from '../../utils/format';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 interface TenderRequestRowProps {
   tender: FBOTender;
@@ -15,6 +15,8 @@ export function TenderRequestRow({ tender, onUpdate }: TenderRequestRowProps) {
   const [taxesInput, setTaxesInput] = useState(tender.counter_taxes_and_fees ? tender.counter_taxes_and_fees.toString() : '');
   const [totalCost, setTotalCost] = useState(tender.counter_total_cost || null);
   const [submitting, setSubmitting] = useState(false);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const price = parseFloat(priceInput);
@@ -33,25 +35,19 @@ export function TenderRequestRow({ tender, onUpdate }: TenderRequestRowProps) {
     try {
       setSubmitting(true);
       const { error } = await supabase
-        .from('fbo_tenders')
-        .update({
-          counter_price: parseFloat(priceInput),
-          counter_taxes_and_fees: parseFloat(taxesInput),
-          counter_total_cost: totalCost,
-          status: 'submitted'
-        })
-        .eq('id', tender.id);
+        .rpc('update_fbo_tender', {
+          p_tender_id: tender.id,
+          p_status: 'submitted',
+          p_counter_price: parseFloat(priceInput),
+          p_taxes_and_fees: parseFloat(taxesInput) || 0
+        });
 
-      if (error) {
-        console.error('Error submitting counter offer:', error);
-        return;
-      }
-
-      // Call the onUpdate callback after successful submission
-      onUpdate?.();
+      if (error) throw error;
       
-    } catch (err) {
-      console.error('Error in handleSubmit:', err);
+      onUpdate?.();
+    } catch (error) {
+      console.error('Error updating tender:', error);
+      window.alert(t('common.errors.updateFailed'));
     } finally {
       setSubmitting(false);
     }
